@@ -1,0 +1,84 @@
+###-------------------------------------------------------------------------------
+### This is definitely not usable as it and will have to be reworked deeply later
+###-------------------------------------------------------------------------------
+kind: Service
+apiVersion: v1
+metadata: 
+ name: webnews_api
+ namespace: default
+ labels: 
+  "k8s-app": webnews_api
+  "k8s-environment": dev
+ annotations: 
+  description: "this is our API"
+spec: 
+ ports: 
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+ selector: 
+  "k8s-app": webnews_api
+  "k8s-environment": dev
+ type: LoadBalancer
+ sessionAffinity: None
+ externalTrafficPolicy: Cluster
+---
+kind: Deployment
+apiVersion: "extensions/v1beta1"
+metadata: 
+ name: webnews_api
+ namespace: default
+ labels: 
+  "k8s-app": webnews_api
+  "k8s-environment": dev
+ annotations: 
+  description: "this is our API"
+spec: 
+ replicas: 1
+ selector: 
+  matchLabels: 
+   "k8s-app": webnews_api
+   "k8s-environment": dev
+ template: 
+  metadata: 
+   name: webnews_api
+   labels: 
+    "k8s-app": webnews_api
+    "k8s-environment": dev
+   annotations: 
+    description: "this is our API"
+  spec: 
+   containers: 
+    - name: webnews_api
+      image: "cfakscontainerregistry.azurecr.io/webnews_api:latest"
+      env: 
+      - name: FLASK_APP
+        value: "webnews_api.py"
+      - name: FLASK_DEBUG
+        value: "0"
+      - name: SECRET_KEY
+        valueFrom:
+          secretKeyRef:
+            name: dev-keys-secret
+            key: secretkey
+        value: "010073c7-648c-4c56-b19e-256fd58353df"
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            name: dev-db-secret
+            key: connect
+      - name: TZ
+        value: "Europe/Zurich"
+      resources: 
+        requests: 
+          cpu: 500m
+          memory: 200Mi
+      imagePullPolicy: Always
+      securityContext: 
+        privileged: false
+   restartPolicy: Always
+   terminationGracePeriodSeconds: 30
+   dnsPolicy: ClusterFirst
+   securityContext: 
+   imagePullSecrets: 
+    - name: "acr-auth"

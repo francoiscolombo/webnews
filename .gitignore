@@ -127,3 +127,59 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+frontend/webnews/dist
+frontend/webnews/tmp
+frontend/webnews/out-tsc
+# Only exists if Bazel was run
+frontend/webnews/bazel-out
+
+# dependencies
+frontend/webnews/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+
+# IDEs and editors
+frontend/webnews/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+frontend/webnews/.sass-cache
+frontend/webnews/connect.lock
+frontend/webnews/coverage
+frontend/webnews/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+frontend/webnews/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# PyCharm internal files
+.idea/
+
+# FCWebNews dev database
+/backend/backend.db
+
+# rabbitmq dev container startup script
+jobs/start_rabbitmq.cmd

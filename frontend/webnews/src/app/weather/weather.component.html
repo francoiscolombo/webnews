@@ -1,0 +1,19 @@
+<span>
+  <span *ngIf="MyWeather" class="weather">
+    {{ MyWeather.town }}, {{ MyWeather.country }} &nbsp; <img src="{{ MyWeather.flag }}" height="18px" alt="FLAG">
+  </span>
+  <span *ngIf="MyWeather" class="weather">
+    &nbsp;
+    <img src="assets/icons/icon-{{ MyWeather.clouds | lowercase }}.png" height="18px" alt="{{ MyWeather.clouds }}">
+    {{ MyWeather.tendency }}
+  </span>
+  <span *ngIf="MyWeather" class="weather">
+  | {{ MyWeather.temperature }}° | HI {{ MyWeather.temperature_max }}° | LO {{ MyWeather.temperature_min }}° |
+  </span>
+  <span *ngIf="MyWeather" class="weather">
+    &nbsp;
+    Wind {{ MyWeather.wind_speed }}
+    &nbsp;
+    {{ MyWeather.humidity }}% HUMIDITY
+  </span>
+</span>

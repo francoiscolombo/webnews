@@ -1,0 +1,37 @@
+<header>
+  <mat-toolbar color="primary" width="100%">
+    <table width="100%">
+      <tr>
+        <td align="left"><app-weather></app-weather></td>
+        <td align="right"><app-ipwan></app-ipwan></td>
+      </tr>
+    </table>
+  </mat-toolbar>
+  <div align="center">
+    <a href="index.html"><img src="assets/images/logo.png" height="60px" alt="LOGO"></a>
+  </div>
+</header>
+
+<section>
+  <div style="display: flex;">
+    <div style="flex: 66%; align-items: center; justify-content: center">
+      <app-category></app-category>
+      <app-latest-news></app-latest-news>
+    </div>
+    <div style="flex: 34%; align-items: center; justify-content: center">
+      <app-top-stories></app-top-stories>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <mat-toolbar color="primary" width="100%">
+    <table width="100%">
+      <tr>
+        <td width="100%" align="center" style="font-size: 12px">Copyright © 2020 <strong>Francois Colombo</strong> All rights reserved.</td>
+      </tr>
+    </table>
+  </mat-toolbar>
+</footer>
+
+<router-outlet></router-outlet>
