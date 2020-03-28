@@ -26,13 +26,19 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
-      run: npm install
+      run: |
+        cd frontend/webnews
+        npm install
 
     - name: Install ng cli
-      run: npm install -g @angular/cli
+      run: |
+        cd frontend/webnews
+        npm install -g @angular/cli
 
     - name: Build project
-      run: ng build --prod
+      run: |
+        cd frontend/webnews
+        ng build --prod
 
 #    - name: Lint project
 #      run: ng lint
