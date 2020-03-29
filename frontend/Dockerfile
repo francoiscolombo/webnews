@@ -1,6 +1,10 @@
 # STEP 1 build static website
 FROM node:alpine as builder
 
+ENV FRONTEND_APP_TOKEN fake
+ENV FRONTEND_APP_NAME fake
+ENV WEBNEWS_API_BASE_URL http://127.0.0.1:5000
+
 RUN apk update && apk add --no-cache git libc6-compat
 
 # Create app directory
@@ -11,7 +15,7 @@ COPY webnews  /app
 
 RUN cd /app && \
     npm install && \
-    npm install -g @angular/cli && \
+    npm install -g @angular/cli@v6-lts && \
     ng build --prod
 
 # STEP 2 build a small nginx image with static website

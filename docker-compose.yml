@@ -69,7 +69,7 @@ services:
       JOBS_APP_TOKEN: ${JOBS_APP_TOKEN}
       JOBS_APP_NAME: ${JOBS_APP_NAME}
       WEBNEWS_API_BASE_URL: http://backend:5000/api/v1.0
-      CELERY_BROKER_URL: amqp://guest:guest@rabbit:5672//
+      CELERY_BROKER_URL: amqp://admin:admin@rabbit:5672//
       CELERY_BACKEND_URL: rpc://
       TZ: "Europe/Zurich"
     networks:
@@ -86,7 +86,7 @@ services:
     environment:
       FRONTEND_APP_TOKEN: ${FRONTEND_APP_TOKEN}
       FRONTEND_APP_NAME: ${FRONTEND_APP_NAME}
-      WEBNEWS_API_BASE_URL: http://fcwebnews:5000/api/v1.0
+      WEBNEWS_API_BASE_URL: http://backend:5000/api/v1.0
       TZ: "Europe/Zurich"
     networks:
       - webnews_network
