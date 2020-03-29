@@ -172,7 +172,7 @@ of course I'm not going to pass the values hardcoded. I need to pass some secret
 so I used this method to be able to uses OS environment variables from Angular...
 
 1. install custom-webpack as dev dependency: `npm install -D @angular-builders/custom-webpack`. this allow to customize build configuration while staying inside the context of the Angular project.
-2. the next step is to tell Angular to use the new builder. so we need to to modify `angular.json` and do this change:
+2. the next step is to tell Angular to use the new builder. so we need to modify `angular.json` and do this change:
 ```json
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
