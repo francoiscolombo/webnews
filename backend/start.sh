@@ -14,6 +14,6 @@ while true; do
 done
 
 flask auth add webnews.jobs
-flask auto add webnews.frontend
+flask auth add webnews.frontend
 
 exec gunicorn -b :5000 --access-logfile - --error-logfile - webnews:app
