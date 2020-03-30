@@ -1,9 +1,9 @@
 # STEP 1 build static website
 FROM node:alpine as builder
 
-ENV FRONTEND_APP_TOKEN fake
-ENV FRONTEND_APP_NAME fake
-ENV WEBNEWS_API_BASE_URL http://127.0.0.1:5000
+ARG FRONTEND_APP_TOKEN
+ARG FRONTEND_APP_NAME
+ARG WEBNEWS_API_BASE_URL
 
 RUN apk update && apk add --no-cache git libc6-compat gettext tzdata
 
