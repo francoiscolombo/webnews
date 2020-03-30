@@ -12,9 +12,9 @@ WORKDIR /app
 
 # Copy project files into the docker image
 COPY webnews  /app
+COPY environment.prod.ts /
 
 RUN cd /app && \
-    mv ./src/environments/environment.prod.ts / && \
     envsubst < /environment.prod.ts > /app/src/environments/environment.prod.ts && \
     rm -f /environment.prod.ts && \
     npm install && \

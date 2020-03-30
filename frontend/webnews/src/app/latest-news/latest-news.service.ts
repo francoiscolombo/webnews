@@ -22,7 +22,7 @@ export class LatestNewsService {
       'application': environment.appName,
       'token': environment.token
     })
-  }
+  };
 
   // GET the latest news
   GetLatestNews(page): Observable<LatestNews[]> {
@@ -30,13 +30,13 @@ export class LatestNewsService {
     .pipe(
       retry(1),
       catchError(this.errorHandler)
-    )
+    );
   }
 
   // Error handling
   errorHandler(error) {
      let errorMessage = '';
-     if(error.error instanceof ErrorEvent) {
+     if (error.error instanceof ErrorEvent) {
        // Get client-side error
        errorMessage = error.error.message;
      } else {

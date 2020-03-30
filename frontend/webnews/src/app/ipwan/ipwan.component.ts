@@ -23,7 +23,7 @@ export class IpWanComponent implements OnInit, OnDestroy {
       this.MyIp = data;
       this.ipStoreService.currentIP = data;
       console.log('IP is', this.MyIp);
-      if(this.MyIp.ip !== null) {
+      if (this.MyIp.ip !== null) {
         this.ipService.UpdateWeather(data).subscribe(res => {
           console.log('Response from update weather is', res);
         });

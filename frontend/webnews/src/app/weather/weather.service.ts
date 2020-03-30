@@ -22,7 +22,7 @@ export class WeatherService {
       'application': environment.appName,
       'token': environment.token
     })
-  }
+  };
 
   // GET my weather
   GetWeather(data): Observable<Weather> {
@@ -30,13 +30,13 @@ export class WeatherService {
     .pipe(
       retry(1),
       catchError(this.errorHandler)
-    )
+    );
   }
 
   // Error handling
   errorHandler(error) {
      let errorMessage = '';
-     if(error.error instanceof ErrorEvent) {
+     if (error.error instanceof ErrorEvent) {
        // Get client-side error
        errorMessage = error.error.message;
      } else {

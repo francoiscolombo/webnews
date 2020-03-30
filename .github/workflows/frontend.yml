@@ -35,13 +35,13 @@ jobs:
         cd frontend/webnews
         npm install -g @angular/cli
 
+    - name: Lint project
+      run: ng lint
+
     - name: Build project
       run: |
         cd frontend/webnews
         ng build
 
-#    - name: Lint project
-#      run: ng lint
-#
 #    - name: Run tests
 #      run: ng test

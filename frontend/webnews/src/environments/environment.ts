@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  baseURL: "http://localhost:5000/api/v1.0/",
-  appName: "dev",
-  token: "dev",
+  baseURL: 'http://localhost:5000/api/v1.0/',
+  appName: 'dev',
+  token: 'dev',
   maxHeadlines: 10,
-  categories: "Business,Entertainment,Health,Lifestyle,Politics,Technology,World"
+  categories: 'Business,Entertainment,Health,Lifestyle,Politics,Technology,World'
 };
 
 /*

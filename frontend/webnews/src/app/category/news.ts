@@ -5,5 +5,5 @@ export class News {
   photo: string;
   content: string;
   date_publish: string;
-  tag: string[]
+  tag: string[];
 }

@@ -22,7 +22,7 @@ export class TopStoryService {
       'application': environment.appName,
       'token': environment.token
     })
-  }
+  };
 
   // GET all the top stories (9 max)
   GetTopStories(): Observable<TopStory[]> {
@@ -30,13 +30,13 @@ export class TopStoryService {
     .pipe(
       retry(1),
       catchError(this.errorHandler)
-    )
+    );
   }
 
   // Error handling
   errorHandler(error) {
      let errorMessage = '';
-     if(error.error instanceof ErrorEvent) {
+     if (error.error instanceof ErrorEvent) {
        // Get client-side error
        errorMessage = error.error.message;
      } else {

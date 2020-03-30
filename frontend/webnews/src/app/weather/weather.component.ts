@@ -22,7 +22,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
     this.ipStoreService.currentIP$.subscribe(newIP => {
       this.currentIP = newIP;
       console.log('Current IP is', this.currentIP);
-      if(this.currentIP.ip !== null) {
+      if (this.currentIP.ip !== null) {
         this.weatherService.GetWeather(this.currentIP).pipe(takeUntil(this.destroy$)).subscribe(data => {
           this.MyWeather = data;
           console.log('Weather is', this.MyWeather);

@@ -22,7 +22,7 @@ export class IpWanService {
       'application': environment.appName,
       'token': environment.token
     })
-  }
+  };
 
   // GET my IP
   GetIpWan(): Observable<IpWan> {
@@ -30,23 +30,23 @@ export class IpWanService {
     .pipe(
       retry(1),
       catchError(this.errorHandler)
-    )
+    );
   }
 
   // Initialize the weather API with my IP
   UpdateWeather(data): Observable<IpWan> {
-    console.log('inside update weather, data is ',data);
+    console.log('inside update weather, data is ', data);
     return this.http.put<IpWan>(this.baseUrl + 'weather', JSON.stringify(data), this.httpOptions)
     .pipe(
       retry(1),
       catchError(this.errorHandler)
-    )
+    );
   }
 
   // Error handling
   errorHandler(error) {
      let errorMessage = '';
-     if(error.error instanceof ErrorEvent) {
+     if (error.error instanceof ErrorEvent) {
        // Get client-side error
        errorMessage = error.error.message;
      } else {
