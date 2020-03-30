@@ -38,7 +38,7 @@ jobs:
     - name: Build project
       run: |
         cd frontend/webnews
-        ng build --prod
+        ng build
 
 #    - name: Lint project
 #      run: ng lint
