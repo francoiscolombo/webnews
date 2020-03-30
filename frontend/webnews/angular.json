@@ -11,7 +11,7 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/webnews",
             "index": "src/index.html",
@@ -25,10 +25,7 @@
             "styles": [
               "src/webnews-theme.scss"
             ],
-            "scripts": [],
-            "customWebpackConfig": {
-              "path":"custom-webpack.config.js"
-            }
+            "scripts": []
           },
           "configurations": {
             "production": {

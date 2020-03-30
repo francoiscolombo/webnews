@@ -13,4 +13,7 @@ while true; do
     sleep 5
 done
 
+flask auth add webnews.jobs
+flask auto add webnews.frontend
+
 exec gunicorn -b :5000 --access-logfile - --error-logfile - webnews:app

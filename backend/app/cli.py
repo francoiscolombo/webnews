@@ -17,12 +17,11 @@ def register(app):
     def add(application):
         """Register a new application allowed to work with the API"""
         a = Auth.query.filter_by(application=application).first()
-        if a:
-            raise RuntimeError('Application <' + application + '> already exists, you cannot add it again.')
-        a = Auth()
-        a.application = application
-        db.session.add(a)
-        db.session.commit()
+        if not a:
+            a = Auth()
+            a.application = application
+            db.session.add(a)
+            db.session.commit()
         print('>>> Application {} registered. Please use the following token to connect: {}'.format(
             a.application, a.get_token()
         ))

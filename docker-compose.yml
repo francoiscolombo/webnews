@@ -67,7 +67,7 @@ services:
     environment:
       NEWS_API_KEY: ${NEWS_API_KEY}
       JOBS_APP_TOKEN: ${JOBS_APP_TOKEN}
-      JOBS_APP_NAME: ${JOBS_APP_NAME}
+      JOBS_APP_NAME: webnews.jobs
       WEBNEWS_API_BASE_URL: http://backend:5000/api/v1.0
       CELERY_BROKER_URL: amqp://admin:admin@rabbit:5672//
       CELERY_BACKEND_URL: rpc://
@@ -85,7 +85,7 @@ services:
       - scheduler
     environment:
       FRONTEND_APP_TOKEN: ${FRONTEND_APP_TOKEN}
-      FRONTEND_APP_NAME: ${FRONTEND_APP_NAME}
+      FRONTEND_APP_NAME: webnews.frontend
       WEBNEWS_API_BASE_URL: http://backend:5000/api/v1.0
       TZ: "Europe/Zurich"
     networks:

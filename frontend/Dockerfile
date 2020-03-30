@@ -5,7 +5,7 @@ ENV FRONTEND_APP_TOKEN fake
 ENV FRONTEND_APP_NAME fake
 ENV WEBNEWS_API_BASE_URL http://127.0.0.1:5000
 
-RUN apk update && apk add --no-cache git libc6-compat
+RUN apk update && apk add --no-cache git libc6-compat gettext tzdata
 
 # Create app directory
 WORKDIR /app
@@ -14,6 +14,9 @@ WORKDIR /app
 COPY webnews  /app
 
 RUN cd /app && \
+    mv ./src/environments/environment.prod.ts / && \
+    envsubst < /environment.prod.ts > /app/src/environments/environment.prod.ts && \
+    rm -f /environment.prod.ts && \
     npm install && \
     npm install -g @angular/cli@v6-lts && \
     ng build --prod
@@ -26,7 +29,7 @@ LABEL application "webnews_frontend"
 
 # Additional packages
 RUN apk update && \
-    apk add --no-cache gettext tzdata bash && \
+    apk add --no-cache tzdata && \
     rm -rf /var/cache/apk/*
 
 ## Remove default nginx website
