@@ -1,19 +1,6 @@
-#
-# 1) to get the list of categories:
-# $ curl -H "application: xxx" -H "token: xxx" http://127.0.0.1:5000/api/v1.0/categories
-# 2) to add a new category:
-# $ curl -H "application: xxx" -H "token: xxx" --header "Content-Type: application/json" --request POST
-#        --data "{\"name\":\"technology\"}" http://127.0.0.1:5000/api/v1.0/categories
-# 3) to update an existing category:
-# $ curl -H "application: xxx" -H "token: xxx" --header "Content-Type: application/json" --request PUT
-#        --data "{\"name\":\"technologies\"}" http://127.0.0.1:5000/api/v1.0/categories/1
-# 4) to delete an existing category:
-# $ curl -H "application: xxx" -H "token: xxx" --header "Content-Type: application/json" --request DELETE
-#        http://127.0.0.1:5000/api/v1.0/categories/1
-#
 from dateutil.parser import isoparse
 from flask import Blueprint, jsonify, abort, make_response, request
-from flask_cors import CORS
+from flask_cors import cross_origin
 from config import Config
 from app import db
 from app.models.webnews import WebNewsCategory, WebNews, WebNewsKeyword
@@ -21,7 +8,6 @@ from app.models.auth import Auth
 from datetime import datetime, timedelta
 
 bp = Blueprint('webnews', __name__)
-CORS(bp)
 
 
 @bp.errorhandler(404)
@@ -40,6 +26,7 @@ def internal_error(error):
 
 
 @bp.before_request
+@cross_origin()
 def before_request_auth():
     if Config.PRODUCTION_MODE == 'yes':
         if request.method != 'OPTIONS':
@@ -54,6 +41,7 @@ def before_request_auth():
 
 
 @bp.route('/api/v1.0/categories/<cat_list>', methods=['GET'])
+@cross_origin()
 def get_categories(cat_list):
     selected_categories = cat_list.split(',')
     categories = []
@@ -85,6 +73,7 @@ def get_categories(cat_list):
 
 
 @bp.route('/api/v1.0/keywords', methods=['GET'])
+@cross_origin()
 def get_keywords():
     # note: only send back keywords with more than 3 news related
     all_keywords = WebNewsKeyword.query.all()
@@ -96,6 +85,7 @@ def get_keywords():
 
 
 @bp.route('/api/v1.0/newsbycategory/<cat_id>', methods=['GET'])
+@cross_origin()
 def get_news_by_category(cat_id):
     c = WebNewsCategory.query.get(int(cat_id))
     if c:
@@ -105,6 +95,7 @@ def get_news_by_category(cat_id):
 
 
 @bp.route('/api/v1.0/newsbykeyword/<keyword_id>', methods=['GET'])
+@cross_origin()
 def get_news_by_keyword(keyword_id):
     k = WebNewsKeyword.query.get(int(keyword_id))
     if k:
@@ -114,6 +105,7 @@ def get_news_by_keyword(keyword_id):
 
 
 @bp.route('/api/v1.0/newsbyauthor/<name>', methods=['GET'])
+@cross_origin()
 def get_news_by_author(name):
     all_news = WebNews.query.filter_by(author=name).order_by(WebNews.date_publish.desc())
     if all_news:
@@ -122,6 +114,7 @@ def get_news_by_author(name):
 
 
 @bp.route('/api/v1.0/top_stories', methods=['GET'])
+@cross_origin()
 def get_top_stories():
     all_news = WebNews.query.filter_by(is_top_story='yes').order_by(WebNews.date_publish.desc())
     if all_news:
@@ -136,6 +129,7 @@ def get_top_stories():
 
 
 @bp.route('/api/v1.0/headlines/<count>', methods=['GET'])
+@cross_origin()
 def get_headlines(count):
     all_news = WebNews.query.filter_by(is_headline='yes').order_by(WebNews.date_publish.desc())
     if all_news:
@@ -146,6 +140,7 @@ def get_headlines(count):
 
 
 @bp.route('/api/v1.0/latest_news/<page>', methods=['GET'])
+@cross_origin()
 def get_latest_news(page):
     one_weeks_ago = datetime.utcnow() - timedelta(weeks=1)
     all_news = db.session.query(WebNews).filter(
@@ -173,6 +168,7 @@ def get_latest_news(page):
 
 
 @bp.route('/api/v1.0/webnews', methods=['POST'])
+@cross_origin()
 def create_webnews():
     if not request.json or 'title' not in request.json or 'category' not in request.json:
         abort(400)
