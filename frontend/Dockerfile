@@ -19,6 +19,7 @@ RUN cd /app && \
     rm -f /environment.prod.ts && \
     npm install && \
     npm install -g @angular/cli@v6-lts && \
+    ng lint && \
     ng build --prod
 
 # STEP 2 build a small nginx image with static website
