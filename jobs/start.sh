@@ -6,4 +6,6 @@ source venv/bin/activate
 
 nohup python scheduler.py start-flower &
 
+nohup python scheduler.py start-beat &
+
 exec python scheduler.py start-worker

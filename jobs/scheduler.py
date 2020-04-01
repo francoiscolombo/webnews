@@ -5,6 +5,7 @@ import inspect
 from requests.exceptions import HTTPError
 from dotenv import load_dotenv
 from celery import Celery
+from celery.schedules import crontab
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
@@ -19,6 +20,20 @@ class Config(object):
     CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
     CELERY_BACKEND_URL = os.environ.get('CELERY_BACKEND_URL')
     CATEGORIES = os.environ.get('CATEGORIES') or 'Technology,Business,Health,Entertainment,Lifestyle,Politics,World'
+
+
+scheduler = Celery(
+    script_name,
+    broker=Config.CELERY_BROKER_URL,
+    backend=Config.CELERY_BACKEND_URL,
+)
+scheduler.conf.beat_schedule = {
+    'synchronize-every-30-minutes': {
+        'task': 'news_synchronize',
+        'schedule': crontab(minute='*/30')
+    },
+}
+scheduler.conf.timezone = 'Europe/Zurich'
 
 
 class API(object):
@@ -155,13 +170,6 @@ class API(object):
         return collected_news
 
 
-scheduler = Celery(
-    script_name,
-    broker=Config.CELERY_BROKER_URL,
-    backend=Config.CELERY_BACKEND_URL,
-)
-
-
 @scheduler.task()
 def news_synchronize():
     for h in API.update_news_from_provider(categories=Config.CATEGORIES):
@@ -192,6 +200,14 @@ def start_worker(ctx):
     print('>>> Start the celery worker. Use CTRL+C to stop it.')
     # we have to add --pool=solo otherwise it can not run on Windows
     os.system("celery -A {} worker --pool=solo --loglevel=info".format(script_name))
+
+
+@news.command()
+@click.pass_context
+def start_beat(ctx):
+    """Start the celery scheduler"""
+    print('>>> Start the celery scheduler. Use CTRL+C to stop it.')
+    os.system("celery -A {} beat".format(script_name))
 
 
 @news.command()
