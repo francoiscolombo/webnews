@@ -1,5 +1,6 @@
 from dateutil.parser import isoparse
 from flask import Blueprint, jsonify, abort, make_response, request
+from flask_cors import cross_origin
 from config import Config
 from app import db
 from app.models.webnews import WebNewsCategory, WebNews, WebNewsKeyword
@@ -38,15 +39,8 @@ def before_request_auth():
                 abort(401)
 
 
-@bp.after_request
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-    return response
-
-
 @bp.route('/api/v1.0/categories/<cat_list>', methods=['GET'])
+@cross_origin()
 def get_categories(cat_list):
     selected_categories = cat_list.split(',')
     categories = []
@@ -78,6 +72,7 @@ def get_categories(cat_list):
 
 
 @bp.route('/api/v1.0/keywords', methods=['GET'])
+@cross_origin()
 def get_keywords():
     # note: only send back keywords with more than 3 news related
     all_keywords = WebNewsKeyword.query.all()
@@ -89,6 +84,7 @@ def get_keywords():
 
 
 @bp.route('/api/v1.0/newsbycategory/<cat_id>', methods=['GET'])
+@cross_origin()
 def get_news_by_category(cat_id):
     c = WebNewsCategory.query.get(int(cat_id))
     if c:
@@ -98,6 +94,7 @@ def get_news_by_category(cat_id):
 
 
 @bp.route('/api/v1.0/newsbykeyword/<keyword_id>', methods=['GET'])
+@cross_origin()
 def get_news_by_keyword(keyword_id):
     k = WebNewsKeyword.query.get(int(keyword_id))
     if k:
@@ -107,6 +104,7 @@ def get_news_by_keyword(keyword_id):
 
 
 @bp.route('/api/v1.0/newsbyauthor/<name>', methods=['GET'])
+@cross_origin()
 def get_news_by_author(name):
     all_news = WebNews.query.filter_by(author=name).order_by(WebNews.date_publish.desc())
     if all_news:
@@ -115,6 +113,7 @@ def get_news_by_author(name):
 
 
 @bp.route('/api/v1.0/top_stories', methods=['GET'])
+@cross_origin()
 def get_top_stories():
     all_news = WebNews.query.filter_by(is_top_story='yes').order_by(WebNews.date_publish.desc())
     if all_news:
@@ -129,6 +128,7 @@ def get_top_stories():
 
 
 @bp.route('/api/v1.0/headlines/<count>', methods=['GET'])
+@cross_origin()
 def get_headlines(count):
     all_news = WebNews.query.filter_by(is_headline='yes').order_by(WebNews.date_publish.desc())
     if all_news:
@@ -139,6 +139,7 @@ def get_headlines(count):
 
 
 @bp.route('/api/v1.0/latest_news/<page>', methods=['GET'])
+@cross_origin()
 def get_latest_news(page):
     one_weeks_ago = datetime.utcnow() - timedelta(weeks=1)
     all_news = db.session.query(WebNews).filter(
@@ -166,6 +167,7 @@ def get_latest_news(page):
 
 
 @bp.route('/api/v1.0/webnews', methods=['POST'])
+@cross_origin()
 def create_webnews():
     if not request.json or 'title' not in request.json or 'category' not in request.json:
         abort(400)

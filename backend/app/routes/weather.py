@@ -1,5 +1,6 @@
 import requests
 from flask import Blueprint, jsonify, abort, make_response, request
+from flask_cors import cross_origin
 from app import db
 from app.models.weather import Weather
 from app.models.auth import Auth
@@ -33,15 +34,8 @@ def before_request_auth():
                 abort(401)
 
 
-@bp.after_request
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-    return response
-
-
 @bp.route('/api/v1.0/weather_ips', methods=['GET'])
+@cross_origin()
 def get_all_ips():
     all_records = Weather.query.all()
     if all_records:
@@ -51,6 +45,7 @@ def get_all_ips():
 
 
 @bp.route('/api/v1.0/weather/<ip_wan>', methods=['GET'])
+@cross_origin()
 def get_weather(ip_wan):
     if ip_wan:
         print('IP wan is {}'.format(ip_wan))
@@ -62,6 +57,7 @@ def get_weather(ip_wan):
 
 
 @bp.route('/api/v1.0/weather', methods=['PUT'])
+@cross_origin()
 def update_weather():
     if not request.json or 'ip' not in request.json:
         abort(400)
@@ -141,6 +137,7 @@ def update_weather():
 
 
 @bp.route('/api/v1.0/weather/<ip_wan>', methods=['DELETE'])
+@cross_origin()
 def delete_weather(ip_wan):
     w = Weather.query.filter_by(ip=ip_wan).first()
     if not w:
