@@ -18,7 +18,7 @@ export class LatestNewsService {
   // Http Headers
   private httpOptions = {
     headers: new HttpHeaders({
-      'Access-Control-Allow-Origin':'*',
+      'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
       'application': environment.appName,
       'token': environment.token
