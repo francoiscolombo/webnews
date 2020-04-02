@@ -29,7 +29,7 @@ scheduler = Celery(
 )
 scheduler.conf.beat_schedule = {
     'synchronize-every-30-minutes': {
-        'task': 'news_synchronize',
+        'task': 'scheduler.news_synchronize',
         'schedule': crontab(minute='*/30')
     },
 }
