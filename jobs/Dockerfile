@@ -7,6 +7,8 @@ ENV WEBNEWS_API_BASE_URL http://127.0.0.1:5000/api/v1.0
 ENV CELERY_BROKER_URL amqp://guest:guest@127.0.0.1:5672//
 ENV CELERY_BACKEND_URL rpc://
 
+RUN apk update && apk add --no-cache curl tzdata
+
 RUN adduser -D fcuser
 
 WORKDIR /home/fcuser

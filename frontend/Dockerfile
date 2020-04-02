@@ -5,7 +5,7 @@ ARG FRONTEND_APP_TOKEN
 ARG FRONTEND_APP_NAME
 ARG WEBNEWS_API_BASE_URL
 
-RUN apk update && apk add --no-cache git libc6-compat gettext tzdata
+RUN apk update && apk add --no-cache curl git libc6-compat gettext tzdata
 
 # Create app directory
 WORKDIR /app

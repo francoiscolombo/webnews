@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.4'
 
 services:
 
@@ -40,6 +40,12 @@ services:
     build:
       context: backend
     image: webnews/backend:latest
+    healthcheck:
+      test: curl -f http://backend:5000/api/v1.0/stats
+      interval: 2m
+      timeout: 3s
+      retries: 3
+      start_period: 1m
     ports:
       - 5000:5000
     depends_on:
@@ -60,6 +66,12 @@ services:
     build:
       context: jobs
     image: webnews/jobs:latest
+    healthcheck:
+      test: curl -f http://scheduler:5555/api/tasks
+      interval: 2m
+      timeout: 3s
+      retries: 3
+      start_period: 1m
     ports:
       - 5555:5555
     depends_on:
@@ -83,6 +95,12 @@ services:
         FRONTEND_APP_NAME: webnews.frontend
         WEBNEWS_API_BASE_URL: http://backend:5000/api/v1.0
     image: webnews/frontend:latest
+    healthcheck:
+      test: curl -f http://frontend/3rdpartylicenses.txt
+      interval: 2m
+      timeout: 3s
+      retries: 3
+      start_period: 1m
     ports:
       - 8080:80
     depends_on:

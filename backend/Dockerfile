@@ -7,6 +7,8 @@ ENV X_RAPID_API_KEY fake
 ENV DATABASE_URL sqlite:///app/backend.db
 ENV PRODUCTION_MODE no
 
+RUN apk update && apk add --no-cache curl tzdata
+
 RUN adduser -D fcuser
 
 WORKDIR /home/fcuser
