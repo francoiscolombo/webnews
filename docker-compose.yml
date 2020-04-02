@@ -93,7 +93,7 @@ services:
       args:
         FRONTEND_APP_TOKEN: ${FRONTEND_APP_TOKEN}
         FRONTEND_APP_NAME: webnews.frontend
-        WEBNEWS_API_BASE_URL: http://backend:5000/api/v1.0
+        WEBNEWS_API_BASE_URL: ${WEBNEWS_API_BASE_URL}
     image: webnews/frontend:latest
     healthcheck:
       test: curl -f http://frontend/3rdpartylicenses.txt
