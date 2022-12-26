@@ -3,4 +3,4 @@ celery==4.4.2
 requests==2.23.0
 click==7.1.1
 flower== 0.9.3
-wheel==0.34.2
+wheel==0.38.1
